@@ -1,0 +1,96 @@
+/*
+ 
+Autor: Hector Manuel Takami Flores A01377647 - ISC11
+Calidad y pruebas de software
+
+ */
+package program1;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.LinkedList;
+
+public class Program1 {
+    private static double calculateStdDev(LinkedList listValues, double mean) {
+        double sumVal = 0;
+        for (int i = 0; i < listValues.size(); i++) {
+            double val = (double)listValues.get(i);
+            sumVal += (Math.pow((val-mean), 2));            
+        }
+        double stdDev = Math.sqrt(sumVal/(listValues.size()-1));
+        return stdDev;
+    }
+    
+    private static double calculateMean(LinkedList listValues){
+        double sumVal = 0;
+        for (int i = 0; i < listValues.size(); i++) {
+            double val = (double)listValues.get(i);
+            sumVal += val;          
+        }
+        return sumVal/listValues.size();
+    }
+    
+    private static ArrayList readFile(String nameFile) {
+        ArrayList numbers = new ArrayList();
+        try {
+            Scanner sc = new Scanner(new FileReader(nameFile));
+            sc.nextLine(); //Title of the .txt we dont need it
+            while(sc.hasNext()){
+                String line = sc.nextLine(); //Get the line read
+                double valueRead = Double.parseDouble(line);
+                numbers.add(valueRead);
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Program1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return numbers;
+    
+    }
+    
+   
+    public static void main(String[] args) {
+         
+        LinkedList list1 = new LinkedList();        
+        list1.addAll(readFile("src/program1/test1_data.txt"));
+        
+        LinkedList list2 = new LinkedList();        
+        list2.addAll(readFile("src/program1/test2_data.txt"));
+        
+        LinkedList list3 = new LinkedList();        
+        list3.addAll(readFile("src/program1/test3_data.txt"));
+        
+        System.out.println("Test 1:");
+        double avg1 = calculateMean(list1);
+        System.out.format("Mean: %.2f\n",avg1);        
+        double stdDev1 = calculateStdDev(list1,avg1);
+        System.out.format("Std.Dev: %.2f\n",stdDev1);
+      
+        System.out.println("************************");
+        
+        System.out.println("Test 2:");
+        double avg2 = calculateMean(list2);
+        System.out.format("Mean: %.2f\n",avg2);        
+        double stdDev2 = calculateStdDev(list2,avg2);
+        System.out.format("Std.Dev: %.2f\n",stdDev2);
+        
+        System.out.println("************************");
+        
+        System.out.println("Test 3:");
+        double avg3 = calculateMean(list3);
+        System.out.format("Mean: %.2f\n",avg3);        
+        double stdDev3 = calculateStdDev(list3,avg3);
+        System.out.format("Std.Dev: %.2f\n",stdDev3);
+        
+              
+        
+        
+        
+        
+    }
+
+    
+
+   
+}
